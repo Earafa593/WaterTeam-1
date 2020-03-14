@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCitiesTable extends Migration
+class CreateCountyRiverTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
+        Schema::create('county_river', function (Blueprint $table) {
+            $table->primary(['county_id', 'river_id']);
             $table->bigInteger('county_id')->unsigned();
+            $table->bigInteger('river_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('county_id')->references('id')->on('counties')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('river_id')->references('id')->on('rivers')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +31,6 @@ class CreateCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('county_river');
     }
 }
