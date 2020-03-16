@@ -8,11 +8,11 @@ class County extends Model
 {
     public function cities()
     {
-        return $this->hasMany('App\City')
+        return $this->hasMany('App\City');
     }
 
     public function rivers()
     {
-        return $this->belongsToMany('App\River')
+        return $this->belongsToMany('App\River');
     }
 }
