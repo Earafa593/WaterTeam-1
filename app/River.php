@@ -15,4 +15,9 @@ class River extends Model
     {
         return $this->belongsToMany('App\County');
     }
+
+    public function water_quality()
+    {
+        return $this->belongsTo('App\Water_quality');
+    }
 }

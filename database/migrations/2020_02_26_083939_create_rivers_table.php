@@ -16,7 +16,10 @@ class CreateRiversTable extends Migration
         Schema::create('rivers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->bigInteger('water_quality_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('water_quality_id')->references('id')->on('water_qualities')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -16,7 +16,9 @@ Route::get('/about', function(){
     return view('about');
 });
 
-Route::get('/counties', 'CountyController@index') ;
+Route::get('/counties', 'CountyController@index');
+
+Route::get('/rivers', 'RiverController@index');
 
 Route::get('/', function () {
     return view('home');
