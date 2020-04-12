@@ -18,3 +18,5 @@ Route::get('/about', function(){
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/image/{image}', 'ImageController@show')->name('image.show');

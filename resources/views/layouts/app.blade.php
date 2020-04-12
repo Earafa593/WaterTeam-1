@@ -24,7 +24,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
 
 
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -153,16 +152,13 @@
                       <!--<button type="submit" style="margin-right: 30px"><i class="fa fa-search" ></i></button>!-->
                     </form>
                     <!--<div id="map">
-                        <iframe  src="https://www.google.com/maps/d/embed?mid=1-3jFUZ3ASehrggUK-zaoeTkYeAHP5f8b" width="640" height="480"  style="align: left"></iframe>
+                        <iframe src="asset('storage/images/'.$article->map)"></iframe>
                     </div>!-->
                    
               </div>
               <!-- /.col -->
             </div>
-            <!-- /.row -->
-            <div id="map">
-                <iframe  src="https://www.google.com/maps/d/embed?mid=1-3jFUZ3ASehrggUK-zaoeTkYeAHP5f8b" width="640" height="480"  style="align:left"></iframe>
-            </div>
+            <!-- /.row -->            
           </div>
           <!-- /.container -->   
           <br>
