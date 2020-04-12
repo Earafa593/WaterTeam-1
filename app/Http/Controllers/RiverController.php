@@ -20,10 +20,13 @@ class RiverController extends Controller
     	$statusCode = $response->getStatusCode();
         $data = json_decode($response->getBody()->getContents(), true);
         foreach ($data['items'] as $item){
-            $river = new River;
-            $river->name = $item['label'];
-            $river->water_quality_id = 1;
-            $river->save();
+            if ($item['type'][0] == 'http://environment.data.gov.uk/catchment-planning/def/water-framework-directive/River')
+            {
+                $river = new River;
+                $river->name = $item['label'];
+                $river->water_quality_id = 1;
+                $river->save();
+            }
         }
     }
 
