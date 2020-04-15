@@ -20,6 +20,8 @@ Route::get('/counties', 'CountyController@index');
 
 Route::get('/rivers', 'RiverController@index');
 
+Route::get('/cities', 'CityController@index');
+
 Route::get('/', function () {
     return view('home');
 });
