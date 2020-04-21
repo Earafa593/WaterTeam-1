@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Spinen\Geometry;
 use App\County;
 
 class CountyController extends Controller
@@ -22,7 +24,21 @@ class CountyController extends Controller
         foreach ($data['items'] as $item){
             $county = new County;
             $county->name = $item['label'];
+            $id = str_replace( 'http://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/', '', $item['@id']);
+            //$response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'. $id .'/polygon');
+            //$polydata = json_decode($response->getBody()->getContents(), true);
+            //$test = parseGeoJson($polydata);
+            //$county->polygon = $polydata;
             $county->save();
+            $response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'. $id .'/water-bodies.json');
+            $waterBodies = json_decode($response->getBody()->getContents(), true);
+            foreach ($waterBodies['items'] as $wbItem){
+                $wb_id = DB::table('rivers')->where('name', $wbItem['label'])->value('id');
+                $exists = $county->rivers()->where('id', $wb_id)->first();
+                if (is_null($exists)){
+                    $county->rivers()->attach($wb_id);
+                }
+            }    
         }
     }
     /**

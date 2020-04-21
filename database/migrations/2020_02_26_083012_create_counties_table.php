@@ -16,6 +16,7 @@ class CreateCountiesTable extends Migration
         Schema::create('counties', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            //$table->multiPolygon('polygon');
             $table->timestamps();
         });
     }

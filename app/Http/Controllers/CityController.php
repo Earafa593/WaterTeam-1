@@ -23,7 +23,7 @@ class CityController extends Controller
             if ($item['adminCode1'] == 'ENG'){
                 $city = new City;
                 $city->name = $item['toponymName'];
-                $city->long = $item['lng'];
+                $city->lng = $item['lng'];
                 $city->lat = $item['lat'];
                 $city->county_id = 1;
                 $city->save();
