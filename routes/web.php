@@ -22,6 +22,8 @@ Route::get('/rivers', 'RiverController@index');
 
 Route::get('/cities', 'CityController@index');
 
+Route::get('/qualities', 'Water_qualityController@index');
+
 Route::get('/', function () {
     return view('home');
 });
