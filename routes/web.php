@@ -15,6 +15,15 @@
 Route::get('/about', function(){
     return view('about');
 });
+
+Route::get('/counties', 'CountyController@index');
+
+Route::get('/rivers', 'RiverController@index');
+
+Route::get('/cities', 'CityController@index');
+
+Route::get('/qualities', 'Water_qualityController@index');
+
 Route::get('/', function () {
     return view('home');
 });
