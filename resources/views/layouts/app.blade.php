@@ -69,19 +69,9 @@
                <li class="nav-item">
                     <a class="nav-link" style="color:white" href="/about">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color:white" href="/">Cities</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color:white" href="/">Counties</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="color:white" href="/">Rivers</a>
-                </li>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
               <!--  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
@@ -151,10 +141,6 @@
                       <button class="btn btn-success pull-right" type="button" ><i class="fa fa-search"></i> Search</button>
                       <!--<button type="submit" style="margin-right: 30px"><i class="fa fa-search" ></i></button>!-->
                     </form>
-                    <!--<div id="map">
-                        <iframe src="asset('storage/images/'.$article->map)"></iframe>
-                    </div>!-->
-                   
               </div>
               <!-- /.col -->
             </div>
