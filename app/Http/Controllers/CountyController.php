@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
-//use Spinen\Geometry\Geometry;
 use App\County;
-//use geoPHP;
-//use Spinen\Geometry\Support\TypeMapper;
-//use Grimzy\LaravelMysqlSpatial\Types\MultiPolygon;
 
 class CountyController extends Controller
 {
@@ -19,8 +15,7 @@ class CountyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
+    {        
         $client = new Client();
     	$response = $client->request('GET', 'http://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict.json');
         $data = json_decode($response->getBody()->getContents(), true);
@@ -32,14 +27,8 @@ class CountyController extends Controller
             $county = new County;
             $county->name = $item['label'];
             $id = str_replace( 'http://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/', '', $item['@id']);
-            //$response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'. $id .'/polygon');
-            //$polydata = json_decode($response->getBody());
-           // $geophp = new GeoPHP();
-           // $mapper = new TypeMapper();
-           // $geometry = new Geometry($geophp, $mapper);
-           // $test = $geometry->parseGeoJson($polydata);
-           //$mp = new Multipolygon(); 
-           //$test = $mp->fromJson($polydata);
+           // $response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'. $id .'/polygon');
+          //  $polydata = json_decode($response->getBody());           
             $county->save();
             $response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'. $id .'/water-bodies.json');
             $waterBodies = json_decode($response->getBody()->getContents(), true);

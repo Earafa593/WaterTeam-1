@@ -17,7 +17,7 @@ class RiverController extends Controller
     public function index()
     {
         $client = new Client();
-        $response = $client->request('GET', 'http://environment.data.gov.uk/catchment-planning/so/WaterBody.json?_limit=100');
+        $response = $client->request('GET', 'http://environment.data.gov.uk/catchment-planning/so/WaterBody.json');
     	$statusCode = $response->getStatusCode();
         $data = json_decode($response->getBody()->getContents(), true);
         foreach ($data['items'] as $item){
