@@ -26,11 +26,9 @@ class CountyController extends Controller
             }
             $county = new County;
             $county->name = $item['label'];
-            $id = str_replace( 'http://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/', '', $item['@id']);
-           // $response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'. $id .'/polygon');
-          //  $polydata = json_decode($response->getBody());           
+            $id = str_replace( 'http://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/', '', $item['@id']);       
             $county->save();
-            $response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'. $id .'/water-bodies.json');
+            $response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'. $id .'/water-bodies.json?_limit=100');
             $waterBodies = json_decode($response->getBody()->getContents(), true);
             foreach ($waterBodies['items'] as $wbItem){
                 $wb_id = DB::table('rivers')->where('name', $wbItem['label'])->value('id');

@@ -22,12 +22,14 @@ class CityController extends Controller
     {
         ini_set('max_execution_time', 300);
         $client = new Client();
-    	$response = $client->request('GET', 'http://api.geonames.org/searchJSON?country=GB&cities=cities15000&maxRows=25&username=nikolaos');
+    	$response = $client->request('GET', 'http://api.geonames.org/searchJSON?country=GB&cities=cities15000&maxRows=50&username=nikolaos');
         $data = json_decode($response->getBody()->getContents(), true);
         foreach ($data['geonames'] as $item){
             if ($item['adminCode1'] == 'ENG'){
                 $city = new City;
                 $city->name = $item['toponymName'];
+                $city->lng = $item['lng'];
+                $city->lat = $item['lat'];
                 //To get 1000 cities with random county ids: set maxRows parameter on the link as 1000 and comment from here...
                 for ($i = 2; $i <= 12; $i++){
                     if ($i == 3 || $i == 4 || $i == 6 || $i == 9 || $i == 11 || $i == 12){
@@ -88,8 +90,7 @@ class CityController extends Controller
                 $response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/RiverBasinDistrict/'.$id.'.json');
                 $county_data = json_decode($response->getBody()->getContents(), true);
                 foreach ($county_data['items'] as $county_item){
-                    $county_id = DB::table('counties')->where('name', $county_item['label'])->value('id');
-                        
+                    $county_id = DB::table('counties')->where('name', $county_item['label'])->value('id');                      
                 }
                 $city->county_id = $county_id;
                 //...to here and uncomment this:

@@ -18,7 +18,6 @@ class RiverController extends Controller
     {
         $client = new Client();
         $response = $client->request('GET', 'http://environment.data.gov.uk/catchment-planning/so/WaterBody.json');
-    	$statusCode = $response->getStatusCode();
         $data = json_decode($response->getBody()->getContents(), true);
         foreach ($data['items'] as $item){
             if ($item['type'][0] == 'http://environment.data.gov.uk/catchment-planning/def/water-framework-directive/River')
@@ -37,9 +36,36 @@ class RiverController extends Controller
                         }
                     }
                 }
-                $id = DB::table('water_qualities')->where('name', $class)->value('id');
-                $river->water_quality_id = $id;
+                $water_quality_id = DB::table('water_qualities')->where('name', $class)->value('id');
+                $river->water_quality_id = $water_quality_id;
                 $river->save();
+                //comment here for getting only the river without cities relation...
+                $cities = DB::table('cities')->get()->values('id', 'lng', 'lat');
+                $response = $client->request('GET', 'https://environment.data.gov.uk/catchment-planning/so/WaterBody/'. $id .'/river-line');
+                $geo_data = json_decode($response->getBody()->getContents(), true);
+                foreach ($geo_data['coordinates'] as $geo_item){
+                    $count = count($geo_item);
+                    foreach ($cities as $city){
+                        $max_lng = $city->lng + 0.3;
+                        $max_lat = $city->lat + 0.3;
+                        $min_lng = $city->lng - 0.3;
+                        $min_lat = $city->lat - 0.3;
+                        for ($i = 0; $i < $count; $i++){
+                            if ((($min_lng <= $geo_item[$i][0]) && ($geo_item[$i][0] <= $max_lng)) && (($min_lat <= $geo_item[$i][1]) && ($geo_item[$i][1] <= $max_lat))){
+                                $exists = $river->cities()->where('id', $city->id)->first();
+                                if (is_null($exists)){
+                                    $river->cities()->attach($city->id);
+                                }
+                                $found = 1;
+                                break;
+                            }
+                        }
+                        if (isset($found)){
+                            break;  
+                        }
+                    }
+                }
+        //...to here
             }
         }
     }
